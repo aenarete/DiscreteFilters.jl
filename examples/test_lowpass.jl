@@ -25,5 +25,5 @@ for i in 1:N
 end
 
 # Plot the results
-plot(collect(1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
+plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
      fig="Exponential Moving Average Filter")
