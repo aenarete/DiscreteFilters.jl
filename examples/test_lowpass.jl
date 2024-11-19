@@ -17,8 +17,11 @@ end
 results = zeros(N)
 
 # Apply the EMA filter
+last_measurement::Float64 = 0.0
 for i in 1:N
-    results[i] = ema_filter(measurements[i], cut_off_freq, dt)
+    global last_measurement
+    results[i] = ema_filter(measurements[i], last_measurement, cut_off_freq, dt)
+    last_measurement = results[i]
 end
 
 # Plot the results
