@@ -2,7 +2,6 @@ using DiscreteFilters, ControlPlots, DSP
 
 # Define the cut-off frequency in Hz
 cut_off_freq = 2.0
-Wn = cut_off_freq
 
 # Define the sampling time in seconds
 dt = 0.05
@@ -11,7 +10,7 @@ sim_time = 4.0
 N = Int(sim_time / dt)
 
 # Design the filter
-butter = Filters.digitalfilter(Filters.Lowpass(Wn; fs), Filters.Butterworth(2))
+butter = Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs), Filters.Butterworth(2))
 
 # Create an array of measurements
 measurements = zeros(N)
