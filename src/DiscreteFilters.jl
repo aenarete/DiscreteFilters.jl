@@ -1,6 +1,8 @@
 module DiscreteFilters
 
-export ema_filter
+using DSP
+
+export ema_filter, create_filter, apply_filter
 
 """
     ema_filter(measurement, last_measurement, cut_off_freq, dt)
@@ -26,6 +28,38 @@ function ema_filter(measurement, last_measurement, cut_off_freq, dt)
         filtered_value = measurement
     end
     return filtered_value
+end
+
+
+"""
+    create_filter(cut_off_freq; order=4, dt)
+
+Design a Butterworth filter with the given cut-off frequency.
+
+# Arguments
+- `cut_off_freq`: The cut-off frequency in Hz
+- `order`: The order of the filter
+- `dt`: The sampling time in seconds
+"""
+function create_filter(cut_off_freq; order=4, dt)
+    Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Butterworth(order))
+end
+
+"""
+    apply_filter(butter, measurement, buffer, index)
+
+Apply the filter to the measurement.
+
+# Arguments
+- `butter`: The filter, created with `create_filter`
+- `measurement`: The measurement value
+- `buffer`: The buffer to store the measurements
+- `index`: The index of the measurement
+"""
+function apply_filter(butter, measurement, buffer, index)
+    buffer[index] = measurement
+    res = filt(butter, buffer[1:index])
+    return res[index]
 end
 
 end
