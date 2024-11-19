@@ -24,7 +24,7 @@ for i in 1:N
     last_measurement = results[i]
 end
 
-# apply the Butterworth filter
+# Apply the Butterworth filter
 buffer = zeros(N)
 results_butter = zeros(N)
 for i in 1:N
