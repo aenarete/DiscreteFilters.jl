@@ -5,12 +5,11 @@ cut_off_freq = 2.0
 
 # Define the sampling time in seconds
 dt = 0.05
-fs = 1/dt
 sim_time = 4.0
 N = Int(sim_time / dt)
 
 # Design the filter
-butter = Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs), Filters.Butterworth(4))
+butter = create_filter(cut_off_freq; order=4, dt)
 
 # Create an array of measurements
 measurements = zeros(N)

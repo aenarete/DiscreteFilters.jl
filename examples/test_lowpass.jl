@@ -24,6 +24,13 @@ for i in 1:N
     last_measurement = results[i]
 end
 
+# apply the Butterworth filter
+buffer = zeros(N)
+results_butter = zeros(N)
+for i in 1:N
+    results_butter[i] = apply_filter(butter, measurements[i], buffer, i)
+end
+
 # Plot the results
-plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
-     fig="Exponential Moving Average Filter")
+plot((1:N)*dt, [measurements, results, results_butter]; xlabel="Time (s)", ylabel="Amplitude", 
+     fig="Exponential Moving Average and Butterworth Filters")

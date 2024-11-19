@@ -38,7 +38,7 @@ Design a Butterworth filter with the given cut-off frequency.
 
 # Arguments
 - `cut_off_freq`: The cut-off frequency in Hz
-- `order`: The order of the filter
+- `order`: The order of the filter, optionally, default: 4
 - `dt`: The sampling time in seconds
 """
 function create_filter(cut_off_freq; order=4, dt)
