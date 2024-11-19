@@ -41,8 +41,12 @@ Design a Butterworth filter with the given cut-off frequency.
 - `order`: The order of the filter, optionally, default: 4
 - `dt`: The sampling time in seconds
 """
-function create_filter(cut_off_freq; order=4, dt)
-    Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Butterworth(order))
+function create_filter(cut_off_freq; order=4, type=:Butter, dt)
+    if type == :Butter
+        return Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Butterworth(order))
+    elseif type == :Cheby1
+        return Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Chebyshev1(order, 0.01))
+    end
 end
 
 """
