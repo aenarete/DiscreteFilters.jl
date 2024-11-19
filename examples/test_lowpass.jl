@@ -1,11 +1,11 @@
 using DiscreteFilters, ControlPlots
 
 # Define the cut-off frequency in Hz
-cut_off_freq = 0.5
+cut_off_freq = 2.0
 
 # Define the sampling time in seconds
-dt = 0.1
-sim_time = 10.0
+dt = 0.05
+sim_time = 4.0
 N = Int(sim_time / dt)
 
 # Create an array of measurements
