@@ -11,7 +11,7 @@ sim_time = 4.0
 N = Int(sim_time / dt)
 
 # Design the filter
-butter = Filters.digitalfilter(Filters.Lowpass(Wn; fs), Filters.Butterworth(4))
+butter = Filters.digitalfilter(Filters.Lowpass(Wn; fs), Filters.Butterworth(2))
 
 # Create an array of measurements
 measurements = zeros(N)
