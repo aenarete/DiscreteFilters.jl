@@ -1,0 +1,13 @@
+name = "DiscreteFilters"
+uuid = "fecfe218-ed78-4cf6-9041-6187dc858112"
+authors = ["Uwe Fechner <fechner@aenarete.eu> and contributors"]
+version = "0.1.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1"
+
+[targets]
+test = ["Test"]
