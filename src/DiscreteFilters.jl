@@ -2,7 +2,7 @@ module DiscreteFilters
 
 using DSP
 
-export ema_filter, create_filter, apply_filter
+export ema_filter, create_filter, apply_filter, apply_delay
 
 """
     ema_filter(measurement, last_measurement, cut_off_freq, dt)
@@ -64,6 +64,15 @@ function apply_filter(butter, measurement, buffer, index)
     buffer[index] = measurement
     res = filt(butter, buffer[1:index])
     return res[index]
+end
+
+function apply_delay(measurement, buffer, index; delay=1)
+    buffer[index] = measurement
+    if index-delay < 1
+        return measurement
+    else
+        return buffer[index-delay]
+    end
 end
 
 end
