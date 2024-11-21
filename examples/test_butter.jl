@@ -1,4 +1,5 @@
-using DiscreteFilters, ControlPlots, DSP
+using DiscreteFilters, ControlPlots, DSP, ControlSystemsBase, Printf, LaTeXStrings
+include("plotting.jl")
 
 # Define the cut-off frequency in Hz
 cut_off_freq = 2.0
@@ -26,3 +27,7 @@ end
 # Plot the results
 plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
      fig="Forth order Butterworth Filter")
+
+# Plot the frequency response
+bo = tf(butter)
+bode_plot(bo)
