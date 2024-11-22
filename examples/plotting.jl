@@ -3,7 +3,7 @@
 ##########################################################################################
 
 """
-    frequency_response(sys; from=-6, to=1)
+    frequency_response(sys; from=-1, to=2)
 
 Calculate the response of a linear system in the frequency domain.
 
