@@ -39,7 +39,7 @@ Create a bode plot of a linear system. Parameters:
 - hz    (default true, use Hz as unit for the frequency)
 
 Returns:
-`max_mag_db, omega_max` (max gain and frequency of max gain in rad/s)
+nothing
 """
 function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, to=1, fig=true, 
                    db=true, hz=true, bw=false, linestyle="solid", title_=true, fontsize=18)
