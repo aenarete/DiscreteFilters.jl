@@ -29,5 +29,5 @@ plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude",
      fig="Forth order Butterworth Filter")
 
 # Plot the frequency response
-bo = tf(butter)
-bode_plot(bo; from=0.31-1, to=0.31)
+bo = tf(butter, dt)
+bode_plot(bo; hz=true, from=0.5, to=1.5)
