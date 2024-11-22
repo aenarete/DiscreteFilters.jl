@@ -27,8 +27,7 @@ end
 todb(mag) = 20 * log10(mag)
 
 """
-    bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, to=1, fig=true, 
-                                                                  db=true)
+    bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, to=1, fig=true, db=true)
 
 Create a bode plot of a linear system. Parameters:
 - title (String)
