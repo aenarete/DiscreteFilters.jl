@@ -30,4 +30,4 @@ plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude",
 
 # Plot the frequency response
 bo = tf(butter, dt)
-bode_plot(bo; hz=true, from=0.5, to=1.5)
+bode_plot(bo; hz=true, from=0.5, to=1.5, title="4th order Butterworth Filter")
