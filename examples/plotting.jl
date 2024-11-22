@@ -9,8 +9,8 @@ Calculate the response of a linear system in the frequency domain.
 
 Parameters:
 - sys:  linear system
-- from: exp10 of the start frequency, default -6 which means f_start = 10e-6 rad/s
-- to:   exp10 of the stop frequency,  default 1 which means f_stop = 10 rad/s
+- from: exp10 of the start frequency, default -1 which means f_start = 10e-1 rad/s
+- to:   exp10 of the stop frequency,  default 2 which means f_stop = 100 rad/s
 
 Returns:
 A tuple of the three vectors w, mag, phase
