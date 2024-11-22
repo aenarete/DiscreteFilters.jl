@@ -43,5 +43,6 @@ for i in 1:N
 end
 
 # Plot the results
-plot((1:N)*dt, [measurements, results, results_butter, results_cheby1]; xlabel="Time (s)", ylabel="Amplitude", 
+plot((1:N)*dt, [measurements, results, results_butter, results_cheby1]; 
+     xlabel="Time (s)", ylabel="Amplitude", 
      fig="Exponential Moving Average and Butterworth Filters")
