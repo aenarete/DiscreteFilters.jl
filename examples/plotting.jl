@@ -101,9 +101,7 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, 
         plt.subplots_adjust(top=0.94)
     end
     # plt.plshow(block=false)
-    max_mag_db, index = findmax(todb.(mag))
-    omega_max = w[index]
-    max_mag_db, omega_max
+    nothing
 end
 
 
