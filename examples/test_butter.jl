@@ -30,4 +30,4 @@ plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude",
 
 # Plot the frequency response
 bo = tf(butter)
-bode_plot(bo)
+bode_plot(bo; from=0.31-1, to=0.31)

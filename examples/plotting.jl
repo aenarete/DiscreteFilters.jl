@@ -3,6 +3,30 @@
 ##########################################################################################
 
 """
+    frequency_response(sys; from=-6, to=1)
+
+Calculate the response of a linear system in the frequency domain.
+
+Parameters:
+- sys:  linear system
+- from: exp10 of the start frequency, default -6 which means f_start = 10e-6 rad/s
+- to:   exp10 of the stop frequency,  default 1 which means f_stop = 10 rad/s
+
+Returns:
+A tuple of the three vectors w, mag, phase
+- w:     vector of frequencies in rad/s
+- mag:   magnitude (gain), to convert into dB use `todb.(mag)`
+- phase: phase in degrees
+"""
+function frequency_response(sys; from=-1, to=2)
+    w = exp10.(LinRange(from, to, 1000));
+    mag, phase, w1 = bode(sys, w)
+    w, mag[:], phase[:]
+end
+
+todb(mag) = 20 * log10(mag)
+
+"""
     bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, to=1, fig=true, 
                                                                   db=true, Γ0=nothing)
 
@@ -17,7 +41,7 @@ Create a bode plot of a linear system. Parameters:
 Returns:
 `max_mag_db, omega_max` (max gain and frequency of max gain in rad/s)
 """
-function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, to=1, fig=true, 
+function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, to=1, fig=true, 
                    db=true, Γ0=nothing, bw=false, linestyle="solid", title_=true, fontsize=18, w_ex=0.0)
     if isnothing(Γ0)
         lbl=""
@@ -73,7 +97,7 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, 
     else
         plt.subplots_adjust(top=0.94)
     end
-    plt.plshow(block=false)
+    # plt.plshow(block=false)
     max_mag_db, index = findmax(todb.(mag))
     omega_max = w[index]
     max_mag_db, omega_max
