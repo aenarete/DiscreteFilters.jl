@@ -28,21 +28,21 @@ todb(mag) = 20 * log10(mag)
 
 """
     bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-3, to=1, fig=true, 
-                                                                  db=true, Γ0=nothing)
+                                                                  db=true)
 
 Create a bode plot of a linear system. Parameters:
 - title (String)
 - from  (min frequency in rad/s, default -3, means 1e-3)
 - to    (max frequency in rad/s, default  1, means 1e1)
 - fig   (default true, create a new figure)
-- db    (default true, use dezibel as unit for the magnitude)
-- Γ0    (default nothing, if a value is passed it is attached as label to the plot)
+- db    (default true, use decibel as unit for the magnitude)
+- hz    (default true, use Hz as unit for the frequency)
 
 Returns:
 `max_mag_db, omega_max` (max gain and frequency of max gain in rad/s)
 """
 function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, to=1, fig=true, 
-                   db=true, hz=true, bw=false, linestyle="solid", title_=true, fontsize=18, w_ex=0.0)
+                   db=true, hz=true, bw=false, linestyle="solid", title_=true, fontsize=18)
     if fig; plt.figure(title, figsize=(8, 6)); end
     ax1 = plt.subplot(211) 
     w, mag, phase = frequency_response(sys; from, to)
@@ -77,13 +77,6 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, 
         ax2.plot(w, phase, color="black", linestyle=linestyle)
     else
         ax2.plot(w, phase)
-    end
-
-    if w_ex != 0.0 && (! isnothing(Γ0) && Γ0 < 1)
-        corr = +8 # adds a little correction to put annotation right
-        ind = findfirst(>=(w_ex), w)
-        plt.plot(w_ex, phase[ind], linewidth=1, marker ="+", color="black", markersize=30)
-        plt.annotate(L"~ω_{ex}",  xy=(w_ex, phase[ind]+corr), fontsize = fontsize)
     end
 
     ax2.set_xscale("log")
