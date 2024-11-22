@@ -42,7 +42,7 @@ Returns:
 `max_mag_db, omega_max` (max gain and frequency of max gain in rad/s)
 """
 function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, to=1, fig=true, 
-                   db=true, Γ0=nothing, bw=false, linestyle="solid", title_=true, fontsize=18, w_ex=0.0)
+                   db=true, hz=true, Γ0=nothing, bw=false, linestyle="solid", title_=true, fontsize=18, w_ex=0.0)
     if isnothing(Γ0)
         lbl=""
     else
@@ -51,6 +51,9 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, 
     if fig; plt.figure(title, figsize=(8, 6)); end
     ax1 = plt.subplot(211) 
     w, mag, phase = frequency_response(sys; from, to)
+    if hz
+        w = w / (2 * π)
+    end
     if db
         if bw
             ax1.plot(w, todb.(mag), label=lbl, color="black", linestyle=linestyle)
@@ -65,7 +68,11 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, 
         plt.ylabel("Magnitude", fontsize = fontsize)
     end
     plt.xlim(w[begin], w[end])
-    plt.xlabel("Frequency [rad/s]", fontsize = fontsize)
+    if hz
+        plt.xlabel("Frequency [Hz]", fontsize = fontsize)
+    else    
+        plt.xlabel("Frequency [rad/s]", fontsize = fontsize)
+    end
     plt.grid(true, which="both", ls="-.")
     if title_
         plt.title(title, fontsize = fontsize)
@@ -90,7 +97,11 @@ function bode_plot(sys::Union{StateSpace, TransferFunction}; title="", from=-1, 
     ax2.set_xscale("log")
     ax2.grid(true, which="both", ls="-.")
     plt.ylabel("Phase [deg]", fontsize = fontsize)
-    plt.xlabel("Frequency [rad/s]", fontsize = fontsize)
+    if hz
+        plt.xlabel("Frequency [Hz]", fontsize = fontsize)
+    else    
+        plt.xlabel("Frequency [rad/s]", fontsize = fontsize)
+    end 
     plt.subplots_adjust(hspace=0.05, bottom=0.11, right=0.97, left=0.11)
     if title == ""
         plt.subplots_adjust(top=0.97)
