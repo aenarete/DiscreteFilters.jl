@@ -4,7 +4,7 @@ include("plotting.jl")
 # Define the cut-off frequency in Hz
 cut_off_freq = 2.0
 
-# Define the sampling time in seconds
+# Define the sampling and simulation time in seconds
 dt = 0.05
 sim_time = 4.0
 N = Int(sim_time / dt)
@@ -12,7 +12,7 @@ N = Int(sim_time / dt)
 # Design the filter
 butter = create_filter(cut_off_freq; order=4, dt)
 
-# Create an array of measurements
+# Create an array of measurements (step signal)
 measurements = zeros(N)
 for i in Int(N/2):N
     measurements[i] = 1.0
