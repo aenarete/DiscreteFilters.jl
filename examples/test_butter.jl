@@ -18,6 +18,7 @@ for i in Int(N/2):N
     measurements[i] = 1.0
 end
 
+# apply the filter
 buffer = zeros(N)
 results = zeros(N)
 for i in 1:N
