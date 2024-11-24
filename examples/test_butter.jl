@@ -25,9 +25,10 @@ for i in 1:N
     results[i] = apply_filter(butter, measurements[i], buffer, i)
 end
 
-# Plot the results
-plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
-     fig="Forth order Butterworth Filter")
+# Plot the step response
+p = plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
+         labels=["Input" "Output"], fig="Forth order Butterworth Filter")
+display(p)
 
 # Plot the frequency response
 bo = tf(butter, dt)
