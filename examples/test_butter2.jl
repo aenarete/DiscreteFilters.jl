@@ -1,6 +1,20 @@
 using DiscreteFilters, ControlPlots, DSP, ControlSystemsBase, Printf, LaTeXStrings
 include("plotting.jl")
 
+function create_filter2(cut_off_freq; order=4, type=:Butter, dt)
+    if type == :Butter
+        return (Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Butterworth(order)))
+    elseif type == :Cheby1
+        return (Filters.digitalfilter(Filters.Lowpass(cut_off_freq; fs=1/dt), Filters.Chebyshev1(order, 0.01)))
+    end
+end
+function apply_filter2(butterF, measurement, index)
+    results = zeros(1)
+    measurements = ones(1) * measurement
+    @views filt!(results[1:1], butterF, measurements)
+    return results[1]
+end
+
 # Define the cut-off frequency in Hz
 cut_off_freq = 2.0
 
@@ -10,7 +24,7 @@ sim_time = 4.0
 N = Int(sim_time / dt)
 
 # Design the filter
-butter = create_filter(cut_off_freq; order=4, dt)
+butter = create_filter2(cut_off_freq; order=4, dt)
 
 # Create an array of measurements (step signal)
 measurements = zeros(N)
@@ -19,12 +33,12 @@ for i in Int(N/2):N
 end
 
 # apply the filter
-buffer = zeros(N)
 results = zeros(N)
+tfilter = DSP.Filters.DF2TFilter(butter)
 for i in 1:N
-    results[i] = apply_filter(butter, measurements[i], buffer, i)
+    results[i] = apply_filter2(tfilter, measurements[i], i)
 end
-@time apply_filter(butter, measurements[N], buffer, N)
+@time apply_filter2(tfilter, measurements[N], N)
 
 # Plot the step response
 p = plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 
