@@ -19,12 +19,12 @@ for i in Int(N/2):N
 end
 
 # apply the filter
-buffer = zeros(N)
 results = zeros(N)
+tfilter = DF2TFilter(butter)
 for i in 1:N
-    results[i] = apply_filter(butter, measurements[i], buffer, i)
+    results[i] = apply_filter(tfilter, measurements[i], i)
 end
-@time apply_filter(butter, measurements[N], buffer, N)
+@time apply_filter(tfilter, measurements[N], N)
 
 # Plot the step response
 p = plot((1:N)*dt, [measurements, results]; xlabel="Time (s)", ylabel="Amplitude", 

@@ -65,6 +65,23 @@ function apply_filter(butter, measurement, buffer, index)
     res = filt(butter, buffer[1:index])
     return res[index]
 end
+"""
+    apply_filter(tfilter::DF2TFilter, measurement, index)
+
+Apply the filter to the measurement.
+
+# Arguments
+- `tfilter`: The filter, created with `create_filter` and converted to a DF2TFilter
+- `measurement`: The measurement value
+- `buffer`: The buffer to store the measurements
+- `index`: The index of the measurement
+"""
+function apply_filter(tfilter::DF2TFilter, measurement, index)
+    results = zeros(1)
+    measurements = ones(1) * measurement
+    @views filt!(results[1:1], tfilter, measurements)
+    return results[1]
+end
 
 function apply_delay(measurement, buffer, index; delay=1)
     buffer[index] = measurement
